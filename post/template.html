@@ -5,8 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>EMPTY_TITLE</title>
-        <link rel="icon" type="image/x-icon" href="assets/logo.png" />
+        <title>Port Forwarder</title>
+        <link rel="icon" type="image/x-icon" href="../assets/logo.png" />
+        <link rel="stylesheet" href="../css/project.css">
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -16,38 +17,22 @@
         <link href="../css/styles.css" rel="stylesheet" />
     </head>
     <body>
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-            <div class="container">
-                <img src="../assets/logo.png" width="50" height="50" />
-                <a class="navbar-brand" href="../index.html">Eric Wu</a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../about.html">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../project.html">Projects</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../contact.html">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <script src="../js/custom-elements/main.js"></script>
+        <my-nav-2></my-nav-2>
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('#')">
+        <header class="masthead" style="background-image: url('../assets/img/21-port-forwarder/banner.png')">
             <div class="overlay"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-md-10 mx-auto">
                         <div class="post-heading">
-                            <h1>EMPTY_TITLE</h1>
-                            <h2 class="subheading">EMPTY_TITLE</h2>
+                            <h1 style="font-size:60px; text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000,
+                            1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;">Port Forwarder</h1>
+                            <h2 class="subheading">A network application that uses advanced TCP/IP programming techniques, an implemented &quot;Port Forwarder&quot; using Python</h2>
                             <span class="meta">
                                 Posted by
-                                <a href="#!">Eric Wu</a>
-                                on EMPTY_DATE
+                                <a href="#!">Jason Soukchamroeun</a>
+                                on April 5, 2021
                             </span>
                         </div>
                     </div>
@@ -55,39 +40,157 @@
             </div>
         </header>
         <!-- Post Content-->
-        <hr />
-        <!-- Footer-->
-        <footer>
+        <article>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-md-10 mx-auto">
-                        <ul class="list-inline text-center">
-                            <li class="list-inline-item">
-                                <a href="https://linkedin.com/in/ericwu1997">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="https://github.com/ericwu1997">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                        <p class="copyright text-muted">Copyright &copy; Your Website 2021</p>
+                        <h2 class="section-heading">Objective</h2>
+                        <p>This project&#39s objective is to design and implement a minimum-functionality Port Forwarder using any language of our choice. Port forwarding is a mechanism that facilitates the forwarding 
+                            of network traffic from one machine to another. The main functionality will have the server forwarding incoming connection requests to specific/ports from any IP address,
+                            to a user-specified IP address/port. The port forwarder was developed utilizing Netfilters in mind.</p>
+                        
+                        <h2 class="section-heading">Approach</h2>
+                        <img class="img-fluid" src="../assets/img/21-port-forwarder/d1.png" alt="..." />
+                        <p>The port forwarder is designed to listen on various incoming ports and then transfer the incoming connection from those ports to another machine listening on the same ports. The diagram above displays the basic connection and data flow between the client machine, port forwarding machine and the  final destination machine. </p>
+                        <p>The diagram describes a client machine accessing a web service, ssh service or a tcp service and makes a connection with the port forwarding machine. While the diagram describes a single machine, multiple client machines can connect to the port forwarding machine with access to different services. The port forwarding machine then connects with the  final destination machine then transfers that data from the client to the server, and vice versa once the data has been received. </p>
+                        <br>
+                        <img class="img-fluid" src="../assets/img/21-port-forwarder/d2.png" alt="..." />
+                        <p>The script will set up the  firewall rules based on the services that are running on the  final destination machine. The user configurable variables will include the port forwarding machine’s ip addresss, the  nal destination ip address, and the list of ports associated with the services that will run on the  nal destination machine. </p>
+                        <p>There will be a clean up function that will clear up the iptable rules that will be run automatically every time the script runs and manually when the iptable rules is the only thing that needs to be run. The main functionality of this script will then iterate over the list of ports and set up prerouting rules to direct incoming traffic to the final destination server and post route the traffic from the final destination server to the source port of the port forwarder ip address to send back the data to the client. </p>
+                        
+                        <h2 class="section-heading">Usage</h2>
+                        <pre>Configuration<br>       Edit <strong>forward.conf</strong> to add additional Port:IP:Port fowarding pairs. <br>Execution<br>      Type "./portf.sh"</pre>
+                        
+                        <h2 class="section-heading">How to run</h2>
+                        <p>
+                            <strong>./portf.sh</strong>
+                            <br /> <br />
+                            Running the above bash script on a linux machine that is designated to be a  firewall / port forwarder will establish iptable rules to forward traffic to the server machine. 
+                            <br /> <br />
+                            The server machine that will run applications such as a web server, will need to be noted on what ports they will be running on. In the portf.sh there is a variable called "SERVICES" that will list a string variable that lists ports separated by spaces. If a new service is available to be accessed on the service, the port number that the service is listening to will have to be noted and inputted into the "SERVICES" variable in the script. 
+                            <br /> <br />
+                            In addition, IP addresses of the port forwarder and the server will need to change accordingly. Use the "ifconfig" or "ip addr" command to  find out the system&#39s ip address. 
+                        </p>
+                        <p>
+                            <strong>./portf.sh stop</strong>
+                            <br /> <br />
+                            Running the "stop" argument with the script will flush the iptable rules which will stop the port forwarder from forwarding traffic to the server that the services are running on. 
+                        </p>
+                        <h2 class="section-heading">Testing</h2>
+                        <p>
+                            <strong>Test Case 1 - Forwarding HTTP Connections:</strong>
+                            This test is done with a web browser. I tested the port forwarding to the default webpage of the apache web server service. In this case, the final destination server will be running as a web server, and the port forwarding server will redirect incoming http traffic to that web server. 
+                            <br /> <br />
+                            When the client enters the IP address of the port forwarding server into the web browser, the port forwarder will listen on port 80 and redirect that traffic to the web server. The port forwarder&#39s iptable will initially have 0 packets at the start of the script running.
+                        </p>
+                        <img class="img-fluid" src="../assets/img/21-port-forwarder/d3.png" alt="..." />
+                        <p>
+                            <strong>Monitoring tool</strong>
+                            : Wireshark
+                            <br />
+                            <strong>Results</strong>
+                            :
+                        </p>
+                        <img class="img-fluid" src="../assets/img/21-port-forwarder/d4.png" alt="..." />
+                        <p>Once the web server has received the requesting data redirected from the port forwarding server, it will send back the web page data back to the port forwarding server to be redirected back to the client machine. The iptables on the port forwarding machine will reflect that redirection of the traffic. </p>
+
+                        <img class="img-fluid" src="../assets/img/21-port-forwarder/d5.png" alt="..." />
+                        <p>The Wireshark output shows the full picture in which the port forwarding (10.0.0.23) machine makes a three way hand with the client (10.0.0.15) and with the web server (10.0.0.8). Once established, the port forwarding machine redirects HTTP traffic between the two machines. </p>
+                        <div class="video-player">
+                            <video src="../assets/videos/21-port-forward/HTTP_FORWARD.mp4"></video>
+                            <div class="controls">
+                              <button class="play-btn"><i class="fas fa-play"></i></button>
+                              <button class="pause-btn"><i class="fas fa-pause"></i></button>
+                              <button class="rewind-btn"><i class="fas fa-backward"></i></button>
+                              <button class="fast-forward-btn"><i class="fas fa-forward"></i></button>
+                              <div class="progress-bar">
+                                <div class="progress"></div>
+                              </div>
+                              <button class="fullscreen-btn"><i class="fas fa-expand"></i></button>
+                            </div>
+                          </div>
+                        <p>
+                            <strong>Test Case 2 - Forwarding SSH Connections:</strong>
+                            This test is done with a windows linux subsystem terminal. I tested the port forwarding to the final destination server&#39s ssh service. In this case, the final destination server will be running as a SSH server, and the port forwarding server will redirect incoming ssh traffic to that SSH server. The client machine (10.0.0.15) will make an attempt to establish an ssh connection to the port forwarding server (10.0.0.23) through the command line. 
+                        </p>
+                        <p>
+                            <strong>Monitoring tool</strong>
+                            : Wireshark
+                            <br />
+                            <strong>Results</strong>
+                            :
+                        </p>
+                        <img class="img-fluid" src="../assets/img/21-port-forwarder/d6.png" alt="..." />
+                        <p>The port forwarder will listen on port 22 and redirect that traffic to the SSH server. The port forwarder&#39s iptable will initially have 0 packets at the start of the script running. Once the SSH server has received the requesting data redirected from the port forwarding server, it will send SSH key exchange data back to the port forwarding server to be redirected back to the client machine. The iptables on the port forwarding machine will reflect that redirection of the traffic. </p>
+
+                        <img class="img-fluid" src="../assets/img/21-port-forwarder/d7.png" alt="..." />
+                        <p>The Wireshark output shows the full picture in which the port forwarding machine (10.0.0.23) makes a three way hand with the client (10.0.0.15) and with the SSH server (10.0.0.8). Once the ssh connection is established, the port forwarding machine redirects ssh traffic between the two machines.</p>
+                        <div class="video-player">
+                            <video src="../assets/videos/21-port-forward/SSH_FORWARD.mp4"></video>
+                            <div class="controls">
+                              <button class="play-btn"><i class="fas fa-play"></i></button>
+                              <button class="pause-btn"><i class="fas fa-pause"></i></button>
+                              <button class="rewind-btn"><i class="fas fa-backward"></i></button>
+                              <button class="fast-forward-btn"><i class="fas fa-forward"></i></button>
+                              <div class="progress-bar">
+                                <div class="progress"></div>
+                              </div>
+                              <button class="fullscreen-btn"><i class="fas fa-expand"></i></button>
+                            </div>
+                          </div>
+                          <p>
+                            <strong>Test Case 3 - Forwarding TCP Echo Connections:</strong>
+                            This test is done with a windows linux subsystem terminal. I tested the port forwarding to the final destination server&#39s echo service. In this case, the final destination server will be running as a TCP Echo server, and the port forwarding server will redirect incoming tcp traffic to the TCP Echo server. The client machine (10.0.0.15) will make attempt to establish a tcp connection to the port forwarding server (10.0.0.23) through a client application on the command line. 
+                        </p>
+                        <p>In this test case, 6 messages were sent from the client (10.0.0.15) to the port forwarding server (10.0.0.23) and a response for each message was sent back. The port forwarding server (10.0.0.23) forwarded the incoming traffic to the TCP Echo server (10.0.0.8) and noted the source ip and port the traffic originated from as it sends a response back. The port forwarder will listen on port 8000 and redirect that traffic to the TCP Echo server.</p>
+                        <p>
+                            <strong>Monitoring tool</strong>
+                            : Wireshark
+                            <br />
+                            <strong>Results</strong>
+                            :
+                        </p>
+                        <img class="img-fluid" src="../assets/img/21-port-forwarder/d8.png" alt="..." />
+                        <p>Once the TCP Echo server has received the requesting data redirected from the port forwarding server, it will send TCP data to the port forwarding server to be redirected back to the client machine. The iptables on the port forwarding machine will reflect that redirection of the traffic. </p>
+
+                        <img class="img-fluid" src="../assets/img/21-port-forwarder/d9.png" alt="..." />
+                        <p>The Wireshark output shows the full picture in which the port forwarding machine makes a three way hand with the client and with the TCP Echo server. Once the tcp connection is established, the port forwarding machine redirects the tcp traffic between the two machines. 
+                        </p>
+                        <div class="video-player">
+                            <video src="../assets/videos/21-port-forward/ECHO_FORWARD.mp4"></video>
+                            <div class="controls">
+                              <button class="play-btn"><i class="fas fa-play"></i></button>
+                              <button class="pause-btn"><i class="fas fa-pause"></i></button>
+                              <button class="rewind-btn"><i class="fas fa-backward"></i></button>
+                              <button class="fast-forward-btn"><i class="fas fa-forward"></i></button>
+                              <div class="progress-bar">
+                                <div class="progress"></div>
+                              </div>
+                              <button class="fullscreen-btn"><i class="fas fa-expand"></i></button>
+                            </div>
+                          </div>
+
+                        <h2 class="section-heading">Conclusion</h2>
+                        <p>This project looks into the implementation of a minimum-functionality Port Forwarder using Netfilters to route the traffic. The report gives a look into the process and how the NAT rules can be configured to allow the packets to be routed correctly. The project developed in this way demonstrates the flexibility of the netfilter packet filtering framework and the iptables firewall. This could be further developed into setting up an internal interface, in which the port forwarding service can route traffic to internal machines with private IP addresses. </p>
+                        
+                        <h2 class="section-heading">Source code</h2>
+                        <p>
+                            The project source code can be found
+                            <a href="https://github.com/jvchamroeun/2021-btch-pf" style="color: blue">here</a>
+                            .
+                        </p>
                     </div>
                 </div>
             </div>
-        </footer>
+        </article>
+        <hr />
+        <!-- Footer-->
+        <my-footer></my-footer>
         <!-- Bootstrap core JS-->
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="../js/scripts.js"></script>
+        <script src="../js/custom-elements/video.js"></script>
     </body>
 </html>
