@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>DNS Spoofing Application</title>
+        <link rel="icon" type="image/x-icon" href="../assets/logo.png" />
+        <link rel="stylesheet" href="../css/project.css">
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="../css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <script src="../js/custom-elements/main.js"></script>
+        <my-nav-2></my-nav-2>
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('../assets/img/22-image-steg/banner.jpg')">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="post-heading">
+                            <h1 style="font-size:60px; text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000,
+                            1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;">Image Steganography</h1>
+                            <h2 class="subheading">An application that allows users to encrypt a secret image, and embed it into a cover image</h2>
+                            <span class="meta">
+                                Posted by
+                                <a href="#!">Jason Soukchamroeun</a>
+                                on May 3, 2022
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Post Content-->
+        <article>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <h2 class="section-heading">Objective</h2>
+                        <p>The main objective for this project was to implement an application that allows users to encrypt a secret image, and embed it into a cover image. The application&#39s output image should visually be identical to the original cover image. The diagram below illustrates the conversion process.</p>
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d1.png" alt="..." />
+
+                        <h2 class="section-heading">Constraints</h2>
+                        <ul>
+                            <li>The image format for the application will be in BMP.</li>
+                            <li>Provide a help function that will display all of the switches and command line arguments used in the application</li>
+                            <li>Required to implement encryption (any cipher) as part of the application.</li>
+                            <li>Note that it will require 8 bytes in the cover image to hide a single byte of the secret image. Other data that will also need to be hidden is the filename, including the extension. Calculate the file sizes of both images and ascertain that the cover file is large enough to hold all of the secret image data.</li>
+                            <li>The application to have at least three separate modules as follows (names are arbitrary): dcstego.py, dcimage.py, dcutils.py</li>
+                            <li>Depending on the platform and language, provide a means of building the application (makefile, project, etc.) and a set of instructions.</li>
+                            <li>As part of the testing, experiment with different cover images (large sections of solid colors, lots of colors, etc.) to see if the stego image reveals any obvious artifacts.</li>
+                            <li>Required to show all the data supporting the success (or lack thereof) of the data embedding scheme in the test document.</li>
+                        </ul>
+
+                        <h2 class="section-heading">Approach</h2>
+                        <p>The application is developed in python. The functionality of hiding the pixels of an image will be implemented using a python library called "Pillow". The library provides APIs for reading pixels from images, editing the pixels, and creating images from a few pixels. Other python modules such as "argparse" and "ntpath" are used for improving the utility of the application.</p>
+                        <p><strong>Encryption and Decryption:</strong> the encryption functionality will be implemented with the symmetric-key algorithm ”DES”. The user input password will be factored into a key of length 8, 16, or 24 bytes, and used for encrypting or decrypting the pixels and filename of the secret image.</p>
+                        <p>The primary programs for this application are:</p>
+                        <ul>
+                            <li>dcstego.py &#8211 the main function that will contain the general functionality such as parsing command line arguments, checking file sizes, file formats, etc.</li>
+                            <li>dcimage.py &#8211 this module will contain all of the functions for the image processing and manipulation.</li>
+                            <li>dcutils.py &#8211 this module will contain the two main functions for hiding and extracting the data.</li>
+                        </ul>
+
+                        <p> Each pixel has the values R, G and B. Each value can be represented in binary (For instance, 11111111 represents hex vlaue 255). The idea is to hide a single bit in the last bit of a rgb value. Each pixel of the secret image can be splitted and hidden into 9 pixels of the cover image.</p>
+                        <p>A header length (integer value) and encrypted header is embedded before the pixel data of the secret image which details the filename and size of the secret image. The figure below shows the structure of the header before it is embedded into pixels of the cover image.</p>
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d2.png" alt="..." />
+                        <p>The application will read the header length and the retrieved header length of bytes will then be decrypted to acquire header information. The header information includes the filename and dimension of the secret image, which is illustrated in the state diagrams.</p>
+
+                        <h2 class="section-heading">Lanugage & Libraries</h2>
+                        <ul>
+                            <li>Language: Python v3.9</li>
+                            <li>Image processing library: Pillow v9.0.1</li>
+                            <li>Encryption & decryption library: DES v1.0.6</li>
+                        </ul>
+                        
+                        <h2 class="section-heading">State Machine Diagram</h2>
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d3.png" alt="..." />
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d4.png" alt="..." />
+
+                        <h2 class="section-heading">Usage</h2>
+                        <p>To run the program, one of the following two commands must be written...</p>
+                        <ul>
+                            <li>dcstego.py [-c] cover image secret image output name password</li>
+                            <ul>
+                                <li>-c/-create is the switch to create a steganography image</li>
+                                <li>cover image is the user provided cover image to be used</li>
+                                <li>secret image is the user provided secret image to be used</li>
+                                <li>output name is the name to provide for the outputted steganogprahy image</li>
+                                <li>password is a word of no more than 24 length to encrypt the secret image</li>
+                            </ul>
+                            <li>dcstego.py [-e] stego image password</li>
+                            <ul>
+                                <li>-e/-extract is the switch to extract from a steganography image</li>
+                                <li>stego image is the user provided steganography image to be used</li>
+                                <li>password is a word of no more than 24 length to decrypt the secret image</li>
+                            </ul>
+                        </ul>
+                       
+                        <h2 class="section-heading">Testing</h2>
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d5.png" alt="..." />
+
+                        <p><strong>Test 1: One Solid Color</strong></p>
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d6.png" alt="..." />
+                        <p>No visible dissertations between the two images.</p>
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d7.png" alt="..." />
+                        <p>No changes in the statistics of the of the images, however results of the histogram show that there is a slight change to the modification of the RGB.</p>
+                        <div class="video-player">
+                            <video src="../assets/videos/21-image-steg/experiment1.mp4"></video>
+                            <div class="controls">
+                                <button class="play-btn"><i class="fas fa-play"></i></button>
+                                <button class="pause-btn"><i class="fas fa-pause"></i></button>
+                                <button class="rewind-btn"><i class="fas fa-backward"></i></button>
+                                <button class="fast-forward-btn"><i class="fas fa-forward"></i></button>
+                                <div class="progress-bar">
+                                <div class="progress"></div>
+                                </div>
+                                <button class="fullscreen-btn"><i class="fas fa-expand"></i></button>
+                            </div>
+                        </div>
+
+                        <p><strong>Test 2: Five Solid Colors</strong></p>
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d8.png" alt="..." />
+                        <p>No visible dissertations between the two images.</p>
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d9.png" alt="..." />
+                        <p>No changes in the statistics of the of the images, however just like experiment 1 the results of the histogram show that there is a change to the modification of the RGB that is a bit more apparent.</p>
+                        <div class="video-player">
+                            <video src="../assets/videos/21-image-steg/experiment2.mp4"></video>
+                            <div class="controls">
+                                <button class="play-btn"><i class="fas fa-play"></i></button>
+                                <button class="pause-btn"><i class="fas fa-pause"></i></button>
+                                <button class="rewind-btn"><i class="fas fa-backward"></i></button>
+                                <button class="fast-forward-btn"><i class="fas fa-forward"></i></button>
+                                <div class="progress-bar">
+                                <div class="progress"></div>
+                                </div>
+                                <button class="fullscreen-btn"><i class="fas fa-expand"></i></button>
+                            </div>
+                        </div>
+
+                        <p><strong>Test 3: Complex Colored Image</strong></p>
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d10.png" alt="..." />
+                        <p>No visible dissertations between the two images.</p>
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d11.png" alt="..." />
+                        <p>No changes in the statistics of the of the images, however just like the previous experiments the results of the histogram show that there is a change to the modification of the RGB that is a bit more apparent.</p>
+                        <div class="video-player">
+                            <video src="../assets/videos/21-image-steg/experiment3.mp4"></video>
+                            <div class="controls">
+                                <button class="play-btn"><i class="fas fa-play"></i></button>
+                                <button class="pause-btn"><i class="fas fa-pause"></i></button>
+                                <button class="rewind-btn"><i class="fas fa-backward"></i></button>
+                                <button class="fast-forward-btn"><i class="fas fa-forward"></i></button>
+                                <div class="progress-bar">
+                                <div class="progress"></div>
+                                </div>
+                                <button class="fullscreen-btn"><i class="fas fa-expand"></i></button>
+                            </div>
+                        </div>
+
+                        <p><strong>Test 4: Complex Black & White Image</strong></p>
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d12.png" alt="..." />
+                        <p>No visible dissertations between the two images.</p>
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d13.png" alt="..." />
+                        <p>No changes in the statistics of the of the images, however just like the previous experiments the results of the histogram show that there is a change to the modification of the RGB that is clear. The image of histogram is clearly black and white greyscale but looking closely at the histograms shows colorized pixels spread through out the image. There is a clear distinction that the image has been modified if looking directly at the histogram.</p>
+                        <div class="video-player">
+                            <video src="../assets/videos/21-image-steg/experiment4.mp4"></video>
+                            <div class="controls">
+                                <button class="play-btn"><i class="fas fa-play"></i></button>
+                                <button class="pause-btn"><i class="fas fa-pause"></i></button>
+                                <button class="rewind-btn"><i class="fas fa-backward"></i></button>
+                                <button class="fast-forward-btn"><i class="fas fa-forward"></i></button>
+                                <div class="progress-bar">
+                                <div class="progress"></div>
+                                </div>
+                                <button class="fullscreen-btn"><i class="fas fa-expand"></i></button>
+                            </div>
+                        </div>
+
+                        <h2 class="section-heading">Conclusion</h2>
+                        <p>This assignment has been of the most interesting assignments that I have done in which I am fascinated by the process of hiding a secret message within a larger one in such a way that no one can discernibly know the presence or contents of the hidden message. I can see the practicality of maintaining a secret communication between two or parties. The results of my implementation shows that my secret image is completely concealed within my cover image. Only with tools like photoshop or gimp and analyzing the statistics of the images will reveal slight modification to the images. If I were to improve this implementation, I would have to modify the image processing to better hide the pixels to be indiscernible when viewing the histogram.</p>
+
+                        <h2 class="section-heading">Appendix</h2>
+                        <img class="img-fluid" src="../assets/img/22-image-steg/d14.png" alt="..." />
+
+                        <h2 class="section-heading">Source code</h2>
+                        <p>
+                            The project source code can be found
+                            <a href="https://github.com/jvchamroeun/2022-btech-imgs" style="color: blue">here</a>
+                            .
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <hr />
+        <!-- Footer-->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <ul class="list-inline text-center">
+                            <li class="list-inline-item">
+                                <a href="https://linkedin.com/in/ericwu1997">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://github.com/ericwu1997">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <p class="copyright text-muted">Copyright &copy; Your Website 2021</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="../js/scripts.js"></script>
+        <script src="../js/custom-elements/video.js"></script>
+    </body>
+</html>

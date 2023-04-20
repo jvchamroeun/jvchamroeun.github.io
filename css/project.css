@@ -1,0 +1,46 @@
+.video-player {
+  position: relative;
+}
+
+.video-player video {
+  width: 100%;
+}
+
+.video-player .controls {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+}
+
+.video-player .controls button {
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.video-player .controls button:focus {
+  outline: none;
+}
+
+.video-player .controls .progress-bar {
+  height: 4px;
+  width: 100%;
+  position: relative;
+  margin: 0 10px;
+}
+
+.video-player .controls .progress {
+  height: 100%;
+  width: 0%;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
