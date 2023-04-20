@@ -71,7 +71,7 @@ class MyHeader extends HTMLElement {
                     <div class="col-lg-8 col-md-10 mx-auto">
                         <div class="page-heading">
                             <h1 style="font-size:60px; text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000,
-                            1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;">Jason Soukchamroeun Portfolio</h1>
+                            1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;">Jason S. Portfolio</h1>
                             <span class="subheading">Network Security Application and Software Developer well versed in SQL, Python, React, React Native and more...</span>
                         </div>
                     </div>
